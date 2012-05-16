@@ -7,3 +7,10 @@ aclocal.m4
 configure
 src/.deps
 src/gmrun
+config.h*
+Makefile*
+config/Makefile*
+src/Makefile*
+depcomp
+gmrun.spec
+stamp-h1
