@@ -9,7 +9,6 @@
  *      option, and provided that this copyright notice remains intact.
  *****************************************************************************/
 
-
 #ifndef __GTKCOMPLETIONLINE_H__
 #define __GTKCOMPLETIONLINE_H__
 
@@ -19,67 +18,71 @@
 
 #include "history.h"
 
-extern "C++" {
+extern "C++"
+{
 
-#define GTK_COMPLETION_LINE(obj) \
-  GTK_CHECK_CAST(obj, gtk_completion_line_get_type(), GtkCompletionLine)
-#define GTK_COMPLETION_LINE_CLASS(klass) \
-  GTK_CHECK_CLASS_CAST(klass, gtk_completion_line_get_type(), GtkCompletionLineClass)
-#define IS_GTK_COMPLETION_LINE(obj) \
-  GTK_CHECK_TYPE(obj, gtk_completion_line_get_type())
+#define GTK_COMPLETION_LINE( obj ) \
+    GTK_CHECK_CAST( obj, gtk_completion_line_get_type(), GtkCompletionLine )
+#define GTK_COMPLETION_LINE_CLASS( klass ) \
+    GTK_CHECK_CLASS_CAST( \
+        klass, \
+        gtk_completion_line_get_type(), \
+        GtkCompletionLineClass \
+    )
+#define IS_GTK_COMPLETION_LINE( obj ) \
+    GTK_CHECK_TYPE( obj, gtk_completion_line_get_type() )
 
-  typedef struct _GtkCompletionLine GtkCompletionLine;
-  typedef struct _GtkCompletionLineClass GtkCompletionLineClass;
+    typedef struct _GtkCompletionLine GtkCompletionLine;
+    typedef struct _GtkCompletionLineClass GtkCompletionLineClass;
 
-  enum GCL_SEARCH_MODE
-  {
-    GCL_SEARCH_OFF = 0,
-    GCL_SEARCH_REW = 1,
-    GCL_SEARCH_FWD = 2,
-    GCL_SEARCH_BEG = 3
-  };
+    enum GCL_SEARCH_MODE
+    {
+        GCL_SEARCH_OFF = 0,
+        GCL_SEARCH_REW = 1,
+        GCL_SEARCH_FWD = 2,
+        GCL_SEARCH_BEG = 3
+    };
 
-  struct _GtkCompletionLine
-  {
-    GtkEntry parent;
-    GtkWidget *win_compl;
-    GtkWidget *list_compl;
-    int list_compl_items_where;
-    int list_compl_nr_rows;
-    int pos_in_text;
+    struct _GtkCompletionLine
+    {
+        GtkEntry parent;
+        GtkWidget* win_compl;
+        GtkWidget* list_compl;
+        int list_compl_items_where;
+        int list_compl_nr_rows;
+        int pos_in_text;
 
-    GList *cmpl;
-    GList *where;
+        GList* cmpl;
+        GList* where;
 
-    HistoryFile *hist;
-    GCL_SEARCH_MODE hist_search_mode;
-    std::string *hist_word;
+        HistoryFile* hist;
+        GCL_SEARCH_MODE hist_search_mode;
+        std::string* hist_word;
 
-    int first_key;
-    int tabtimeout;
-    int show_dot_files;
-  };
+        int first_key;
+        int tabtimeout;
+        int show_dot_files;
+    };
 
-  struct _GtkCompletionLineClass
-  {
-    GtkEntryClass parent_class;
-    /* add your CLASS members here */
+    struct _GtkCompletionLineClass
+    {
+        GtkEntryClass parent_class;
 
-    void (* unique)(GtkCompletionLine *cl);
-    void (* notunique)(GtkCompletionLine *cl);
-    void (* incomplete)(GtkCompletionLine *cl);
-    void (* runwithterm)(GtkCompletionLine *cl);
-    void (* search_mode)(GtkCompletionLine *cl);
-    void (* search_letter)(GtkCompletionLine *cl);
-    void (* search_not_found)(GtkCompletionLine *cl);
-    void (* ext_handler)(GtkCompletionLine *cl);
-    void (* cancel)(GtkCompletionLine *cl);
-  };
+        void ( * unique )( GtkCompletionLine* cl );
+        void ( * notunique )( GtkCompletionLine* cl );
+        void ( * incomplete )( GtkCompletionLine* cl );
+        void ( * runwithterm )( GtkCompletionLine* cl );
+        void ( * search_mode )( GtkCompletionLine* cl );
+        void ( * search_letter )( GtkCompletionLine* cl );
+        void ( * search_not_found )( GtkCompletionLine* cl );
+        void ( * ext_handler )( GtkCompletionLine* cl );
+        void ( * cancel )( GtkCompletionLine* cl );
+    };
 
-  guint gtk_completion_line_get_type(void);
-  GtkWidget *gtk_completion_line_new();
+    guint gtk_completion_line_get_type( void );
+    GtkWidget* gtk_completion_line_new();
 
-  void gtk_completion_line_last_history_item(GtkCompletionLine*);
+    void gtk_completion_line_last_history_item( GtkCompletionLine* );
 }
 
 #endif /* __GTKCOMPLETIONLINE_H__ */

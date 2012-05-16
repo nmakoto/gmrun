@@ -9,63 +9,74 @@
  *      option, and provided that this copyright notice remains intact.
  *****************************************************************************/
 
-
 #ifndef __HISTORY_H__
 #define __HISTORY_H__
 
 #include <vector>
 #include <string>
+
 using namespace std;
 
 class HistoryFile
 {
- protected:
-  int m_file_entries;
-  string m_filename;
-  string m_default;
-  bool m_default_set;
-  int m_current;
+protected:
+    int m_file_entries;
+    string m_filename;
+    string m_default;
+    bool m_default_set;
+    int m_current;
 
-  typedef vector<string> StrArray;
-  StrArray history;
+    typedef vector<string> StrArray;
+    StrArray history;
 
- public:
-  HistoryFile();
-  ~HistoryFile();
+public:
+    HistoryFile();
+    ~HistoryFile();
 
-  void append(const char *entry);
-  void set_default(const char *defstr);
-  void clear_default();
+    void append( const char* entry );
+    void set_default( const char* defstr );
+    void clear_default();
 
-  void reset_position();
+    void reset_position();
 
-  const char * operator [] (size_t index);
+    const char* operator []( size_t index );
 
-  const char * prev();
-  const char * next();
+    const char* prev();
+    const char* next();
 
-  const char * prev_to_first();
-  const char * next_to_last();
+    const char* prev_to_first();
+    const char* next_to_last();
 
-  void sync_the_file();
+    void sync_the_file();
 
-  inline const char* last_item() {
-    return history.empty() ? 0 : history.back().c_str();
-  }
+    inline const char* last_item()
+    {
+        return history.empty() ? 0 : history.back().c_str();
+    }
 
-  inline const char* first_item() {
-    return history.empty() ? 0 : history.front().c_str();
-  }
+    inline const char* first_item()
+    {
+        return history.empty() ? 0 : history.front().c_str();
+    }
 
- protected:
-  void read_the_file();
- private:
-  struct DumpString {
-    DumpString(std::ostream& o) : _out(o) {}
-    void operator()(std::string& str) { _out << str << endl; }
-  private:
-    std::ostream& _out;
-  };
+protected:
+    void read_the_file();
+
+private:
+    struct DumpString
+    {
+        DumpString( std::ostream& o ):
+            _out( o )
+        {
+        }
+        void operator()( std::string& str )
+        {
+            _out << str << endl;
+        }
+
+    private:
+        std::ostream& _out;
+    };
 };
 
 #endif // __HISTORY_H__

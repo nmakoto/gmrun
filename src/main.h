@@ -8,6 +8,3 @@
  *    terms of the GNU General Public License, version 2 or above, at your
  *      option, and provided that this copyright notice remains intact.
  *****************************************************************************/
-
-
-
