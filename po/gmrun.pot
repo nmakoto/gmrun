@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Mihai Bazon <mishoo@infoiasi.ro>
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gmrun 0.9.2\n"
+"Report-Msgid-Bugs-To: Mihai Bazon <mishoo@infoiasi.ro>\n"
+"POT-Creation-Date: 2012-05-17 11:02+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/main.cc:165 src/main.cc:314
+msgid "ERROR: "
+msgstr ""
+
+#: src/main.cc:335
+msgid "Handler: "
+msgstr ""
+
+#: src/main.cc:403 src/main.cc:881
+msgid "Run program:"
+msgstr ""
+
+#: src/main.cc:411
+msgid "unique"
+msgstr ""
+
+#: src/main.cc:418
+msgid "not unique"
+msgstr ""
+
+#: src/main.cc:425
+msgid "not found"
+msgstr ""
+
+#: src/main.cc:435 src/main.cc:453
+msgid "Search:"
+msgstr ""
+
+#: src/main.cc:441
+msgid "Search OFF"
+msgstr ""
+
+#: src/main.cc:460
+msgid "Not Found!"
+msgstr ""
+
+#: src/main.cc:531
+msgid "No URL handler for ["
+msgstr ""
+
+#: src/main.cc:861
+msgid "Execute program feat. completion"
+msgstr ""
+
+#: src/main.cc:1021
+msgid "This option specifies the initial size and location of the window."
+msgstr ""

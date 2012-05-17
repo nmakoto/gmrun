@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = src config
+SUBDIRS = po src config
 
 install-data-local:
 	@$(NORMAL_INSTALL)
@@ -23,4 +23,6 @@ dist-hook:
 		done \
 	fi
 
-EXTRA_DIST = gmrun.spec.in
+EXTRA_DIST = config.rpath  gmrun.spec.in
+
+ACLOCAL_AMFLAGS = -I m4

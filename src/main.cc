@@ -23,6 +23,12 @@
 #include <iterator>
 #include <popt.h>
 
+#include <config.h>
+#include <locale.h>
+#include <libintl.h>
+
+#define _( string ) gettext( string )
+
 using namespace std;
 
 #ifdef MTRACE
@@ -156,7 +162,7 @@ static void run_with_system( const std::string& command, struct gigi* g )
         gtk_main_quit();
     else
     {
-        string error( "ERROR: " );
+        string error( _("ERROR: ") );
         error += strerror( errno );
 #ifdef DEBUG
         cerr << error << endl;
@@ -305,7 +311,7 @@ ordinary:
 #endif
 
     execvp( prog.c_str(), (char**) & (*argv.begin()) );
-    string error( "ERROR: " );
+    string error( _("ERROR: ") );
     error += strerror( errno );
 #ifdef DEBUG
     cerr << error << endl;
@@ -326,7 +332,7 @@ static void on_ext_handler(
 
     if( ext && configuration.get_ext_handler(ext, cmd) )
     {
-        string str( "Handler: " );
+        string str( _("Handler: ") );
         size_t pos = cmd.find_first_of( " \t" );
 
         if( pos == string::npos )
@@ -394,7 +400,7 @@ static void on_compline_runwithterm( GtkCompletionLine* cl, struct gigi* g )
 
 static gint search_off_timeout( struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "Run program:" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("Run program:") );
     gtk_widget_set_style( g->w1, style_normal(g->w1) );
     gtk_widget_hide( g->w2 );
     return FALSE;
@@ -402,21 +408,21 @@ static gint search_off_timeout( struct gigi* g )
 
 static void on_compline_unique( GtkCompletionLine* cl, struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "unique" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("unique") );
     gtk_widget_set_style( g->w1, style_unique(g->w1) );
     add_search_off_timeout( 1000, g );
 }
 
 static void on_compline_notunique( GtkCompletionLine* cl, struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "not unique" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("not unique") );
     gtk_widget_set_style( g->w1, style_notunique(g->w1) );
     add_search_off_timeout( 1000, g );
 }
 
 static void on_compline_incomplete( GtkCompletionLine* cl, struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "not found" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("not found") );
     gtk_widget_set_style( g->w1, style_notfound(g->w1) );
     add_search_off_timeout( 1000, g );
 }
@@ -426,13 +432,13 @@ static void on_search_mode( GtkCompletionLine* cl, struct gigi* g )
     if( cl->hist_search_mode != GCL_SEARCH_OFF )
     {
         gtk_widget_show( g->w2 );
-        gtk_label_set_text( GTK_LABEL(g->w1), "Search:" );
+        gtk_label_set_text( GTK_LABEL(g->w1), _("Search:") );
         gtk_label_set_text( GTK_LABEL(g->w2), cl->hist_word->c_str() );
     }
     else
     {
         gtk_widget_hide( g->w2 );
-        gtk_label_set_text( GTK_LABEL(g->w1), "Search OFF" );
+        gtk_label_set_text( GTK_LABEL(g->w1), _("Search OFF") );
         add_search_off_timeout( 1000, g );
     }
 }
@@ -444,14 +450,14 @@ static void on_search_letter( GtkCompletionLine* cl, GtkWidget* label )
 
 static gint search_fail_timeout( struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "Search:" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("Search:") );
     gtk_widget_set_style( g->w2, style_notunique(g->w2) );
     return FALSE;
 }
 
 static void on_search_not_found( GtkCompletionLine* cl, struct gigi* g )
 {
-    gtk_label_set_text( GTK_LABEL(g->w1), "Not Found!" );
+    gtk_label_set_text( GTK_LABEL(g->w1), _("Not Found!") );
     gtk_widget_set_style( g->w2, style_notfound( g->w2 ) );
     add_search_off_timeout( 1000, g, GtkFunction(search_fail_timeout) );
 }
@@ -522,7 +528,7 @@ static bool url_check( GtkCompletionLine* cl, struct gigi* g )
         {
             gtk_label_set_text(
                 GTK_LABEL( g->w1 ),
-                ( string("No URL handler for [") + url_type + "]" ).c_str()
+                ( string(_("No URL handler for [")) + url_type + "]" ).c_str()
             );
             gtk_widget_set_style( g->w1, style_notfound(g->w1) );
             add_search_off_timeout( 1000, g );
@@ -831,6 +837,11 @@ static void gmrun_gtk_window_place_at(
 
 int main( int argc, char** argv )
 {
+	setlocale( LC_ALL, "" );
+	bindtextdomain( PACKAGE, LOCALEDIR );
+	textdomain( PACKAGE );
+
+
     GtkWidget* win;
     GtkWidget* compline;
     GtkWidget* label_search;
@@ -845,7 +856,10 @@ int main( int argc, char** argv )
     gtk_widget_realize( win );
     gdk_window_set_decorations( win->window, GDK_DECOR_BORDER );
     gtk_widget_set_name( win, "Msh_Run_Window" );
-    gtk_window_set_title( GTK_WINDOW(win), "Execute program feat. completion" );
+    gtk_window_set_title(
+		GTK_WINDOW( win ),
+		_( "Execute program feat. completion" )
+	);
     gtk_window_set_policy( GTK_WINDOW(win), FALSE, FALSE, TRUE );
     // gtk_window_set_position( GTK_WINDOW(win), GTK_WIN_POS_CENTER );
     gtk_container_set_border_width( GTK_CONTAINER(win), 4 );
@@ -864,7 +878,7 @@ int main( int argc, char** argv )
     gtk_widget_show( hhbox );
     gtk_box_pack_start( GTK_BOX(hbox), hhbox, FALSE, FALSE, 0 );
 
-    GtkWidget* label = gtk_label_new( "Run program:" );
+    GtkWidget* label = gtk_label_new( _("Run program:") );
     gtk_widget_show( label );
     gtk_misc_set_alignment( GTK_MISC(label), 0.0, 1.0 );
     gtk_misc_set_padding( GTK_MISC(label), 10, 0 );
@@ -1003,8 +1017,10 @@ int main( int argc, char** argv )
             POPT_ARG_STRING | POPT_ARGFLAG_ONEDASH,
             &geoptr,
             0,
-            "This option specifies the initial "
-            "size and location of the window.",
+            _(
+				"This option specifies the initial "
+				"size and location of the window."
+			),
             NULL
         },
         POPT_AUTOHELP

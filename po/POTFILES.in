@@ -1,0 +1,11 @@
+# List of source files which contain translatable strings.
+
+src/ci_string.h
+src/gtkcompletionline.cc
+src/gtkcompletionline.h
+src/history.cc
+src/history.h
+src/main.cc
+src/main.h
+src/prefs.cc
+src/prefs.h
